@@ -5,11 +5,13 @@
  */
 package main;
 
+import java.awt.Color;
 import java.awt.Image;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -47,10 +49,27 @@ public class frmMain extends javax.swing.JFrame {
         }
     }
     
+    public int disminuir(int semaforo) {
+        semaforo--;
+        return semaforo;
+    }
+    
     private class Naturaleza extends Thread{
         @Override
         public void run(){
             while(true){
+                // Inicio semáforo
+                if (!lblEstadoSapo1.getText().equals("Cobrando")) {
+                    lblEstadoSapo1.setForeground(new Color(60, 63, 65));
+                }
+                if (!lblEstadoSapo2.getText().equals("Cobrando")) {
+                    lblEstadoSapo2.setForeground(new Color(60, 63, 65));
+                }
+                if (!lblEstadoSapo3.getText().equals("Cobrando")) {
+                    lblEstadoSapo3.setForeground(new Color(60, 63, 65));
+                }
+                for(int ecosistema=1; ecosistema<=5; ecosistema++){
+           
                 try {
                     Thread.sleep(10000); // 10 segundos para generar una mosca
                 } catch (InterruptedException ex) {
@@ -62,7 +81,7 @@ public class frmMain extends javax.swing.JFrame {
                 // fin de cambio en imagen
                 hayMosca = true; // notifica a los sapos que ya hay mosca en la hoja
                 lblEstadoHoja.setText("Hay mosca");
-            }
+            }}
         }
     }
     
@@ -77,7 +96,7 @@ public class frmMain extends javax.swing.JFrame {
             while(true){
                 while (hayMosca==false) // mientras no haya mosca debe esperar
                     estado.setText("Esperando...");
-                estado.setText("Voy a atrapar la mosca");
+                    estado.setText("Voy a atrapar la mosca");
                 try {
                     Thread.sleep(100); // una decima de segundo para arrojar la lengua
                 } catch (InterruptedException ex) {
@@ -107,7 +126,41 @@ public class frmMain extends javax.swing.JFrame {
             this.contador.setText(String.valueOf(this.moscasDevoradas));
         }
     }
+    
+    public boolean sapoenespera() {
+        // Analiza si las sillas de espera están vacías o llenas
+        // Regresa false si están ocupadas, o true si hay alguna vacía
+        int contador = 5;
+        if (lblEstadoSapo1.isVisible()) {
+            contador++;
+        }
+        if (lblEstadoSapo2.isVisible()) {
+            contador++;
+        }
+        if (lblEstadoSapo3.isVisible()) {
+            contador++;
+        }
 
+        return !(contador == 4);
+    }
+
+     public int dormir(int barbero) {
+        switch (barbero) {
+            case 1:
+                lblSapo1.setVisible(false);
+                lblSapo1.setText("Durmiendo");
+                break;
+            case 2:
+                lblSapo2.setVisible(false);
+                lblSapo2.setText("Durmiendo");
+                break;
+            default:
+                lblSapo3.setVisible(false);
+                lblSapo3.setText("Durmiendo");
+                break;
+        }
+        return 1;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
